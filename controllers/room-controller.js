@@ -1,3 +1,10 @@
+const conn = require('../config/database-connection')
+const roomController = require('../models/room')
+var querySelector = new roomController()
+
+module.exports = {
+    get_all_rooms: (req, res) => {
+        conn.query(querySelector.get_all_rooms(),
             (error, result) => {
                 if (error) {
                     console.log("Error in get_all_rooms")
