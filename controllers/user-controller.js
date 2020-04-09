@@ -87,7 +87,7 @@ module.exports = {
         )
     },
     edit_existing_user: (req, res) => {
-        conn.query(querySelector.edit_existing_user(req.body.roleId, req.body.expedientNumber, req.body.password, req.body.mail),
+        conn.query(querySelector.edit_existing_user(req.body.roleId, req.body.expedientNumber, req.body.password, req.body.mail, req.body.isVisible),
             (error, result) => {
                 if (error) {
                     console.log("Error in edit_existing_user")

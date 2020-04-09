@@ -1,6 +1,6 @@
 class role {
     get_all_roles(){
-        return `SELECT id, role_description FROM "role"`
+        return `SELECT id, name FROM "role"`
     }
 }
 
