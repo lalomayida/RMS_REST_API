@@ -38,7 +38,7 @@ module.exports = {
                     res.send({
                         status: 'error',
                         error: {
-                            code: "1084",
+                            code: "10848",
                             description: "No visible rooms"
                         }
                     })
