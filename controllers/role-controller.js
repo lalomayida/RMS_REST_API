@@ -17,7 +17,7 @@ module.exports = {
                     console.log("Success in get_all_roles")
                     res.send({
                         status: 'success',
-                        despription: result.rows
+                        data: result.rows
                     })
                 }
             }

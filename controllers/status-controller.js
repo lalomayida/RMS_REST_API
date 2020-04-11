@@ -1,5 +1,5 @@
 const conn = require('../config/database-connection')
-const statusQueries = require('../models/requisition-need')
+const statusQueries = require('../models/status')
 var querySelector = new statusQueries()
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
                     console.log("Success retrieving get_status_when_open")
                     res.send({
                         status: 'success',
-                        despription: result.rows
+                        data: result.rows
                     })
                 }
             }
@@ -37,7 +37,7 @@ module.exports = {
                     console.log("Success retrieving get_status_when_in_progress")
                     res.send({
                         status: 'success',
-                        despription: result.rows
+                        data: result.rows
                     })
                 }
             }
@@ -57,7 +57,7 @@ module.exports = {
                     console.log("Success retrieving get_status_when_approved")
                     res.send({
                         status: 'success',
-                        despription: result.rows
+                        data: result.rows
                     })
                 }
             }
@@ -77,10 +77,34 @@ module.exports = {
                     console.log("Success retrieving get_status_when_rejected")
                     res.send({
                         status: 'success',
-                        despription: result.rows
+                        data: result.rows
                     })
                 }
             }
         )
+    },
+    get_requisition_status: async (idStatus) => {
+        let getRequisitionStatusPromise = new Promise((res, err) => {
+            conn.query(querySelector.get_requisition_status(idStatus),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in get_requisition_status")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success retrieving get_requisition_status")
+                        return res({
+                            status: 'success',
+                            data: (result.rows)[0]
+                        })
+                    }
+                }
+            )
+        })
+        let response = await getRequisitionStatusPromise
+        return response
     },
 }

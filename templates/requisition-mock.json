@@ -1,0 +1,48 @@
+{
+    "id": 1,
+    "room": {
+        "id": 1,
+        "name": "lorem"
+    },
+    "user": {
+        "id": 1,
+        "expedientNumber": 320035,
+        "name": "lorem"
+    },
+    "agent": {
+        "id": 1,
+        "level": 2,
+        "expedientNumber": 320035,
+        "name": "lorem"
+    },
+    "initialDate": "",
+    "finalDate": "",
+    "description": "lorem ispum dolor saten merma",
+    "status": {
+        "id": 1,
+        "name": "lorem"
+    },
+    "department": {
+        "id": 1,
+        "name": "name"
+    },
+    "comment": [
+        {
+            "id_user": 1,
+            "comment": "sadsdasdasd",
+            "submit_date": "2020-04-10 14:21:04.5009"
+        }
+    ],
+    "needs": [
+        {
+            "id": 1,
+            "name": "lorem",
+            "quantity": 1
+        },
+        {
+            "id": 1,
+            "name": "lorem",
+            "quantity": 1
+        }
+    ]
+}

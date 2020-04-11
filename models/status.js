@@ -11,6 +11,9 @@ class status {
     get_status_when_rejected() {
         return `SELECT id, name FROM status WHERE id in (4)`
     }
+    get_requisition_status(idStatus) {
+        return `SELECT id, name FROM status WHERE id = ` + idStatus
+    }
 }
 
 module.exports = status

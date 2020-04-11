@@ -1,55 +1,63 @@
 const conn = require('../config/database-connection')
-const requisitionNeedsQueries = require('../models/requisition-need')
+const requisitionNeedsQueries = require('../models/comment')
 var querySelector = new requisitionNeedsQueries()
 
 module.exports = {
-    get_requisition_comments: (req, res) => {
-        conn.query(querySelector.get_requisition_comments(req.query.idRequisition),
-            (error, result) => {
-                if (error) {
-                    console.log("Error in get_requisition_comments")
-                    res.send({
-                        status: 'error',
-                        error: error
-                    })
+    get_requisition_comments: async (idRequisition) => {
+        let getRequisitionCommentPromise = new Promise((res, err) => {
+            conn.query(querySelector.get_requisition_comments(idRequisition),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in get_requisition_comments")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else if ((result.rows).length === 0) {
+                        console.log("No available records, retreiving 0 records for get_requisition_comments")
+                        return res({
+                            status: 'error',
+                            error: {
+                                code: "10850",
+                                description: "No available comments"
+                            }
+                        })
+                    } else {
+                        console.log("Success retreiving get_requisition_comments")
+                        return res({
+                            status: 'success',
+                            data: result.rows
+                        })
+                    }
                 }
-                else if ((result.rows).length === 0) {
-                    console.log("No available records, error retreiving get_requisition_comments")
-                    res.send({
-                        status: 'error',
-                        error: {
-                            code: "10850",
-                            description: "No available comments"
-                        }
-                    })
-                } else {
-                    console.log("Success retreiving get_requisition_comments")
-                    res.send({
-                        status: 'success',
-                        data: result.rows
-                    })
-                }
-            }
-        )
+            )
+        })
+        let response = await getRequisitionCommentPromise
+        return response
     },
-    set_requisition_comment: (req, res) => {
-        conn.query(querySelector.set_requisition_comment(req.body.idUser,req.body.comment,req.body.idRequisiton),
-            (error, result) => {
-                if (error) {
-                    console.log("Error in set_requisition_comment")
-                    res.send({
-                        status: 'error',
-                        error: error
-                    })
+    set_requisition_comment: async (req, res) => {
+        let setRequisitionCommentPromise = new Promise((res, err) => {
+            conn.query(querySelector.set_requisition_comment(req.body.user.id, req.body.comment[0].comment, req.body.id),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in set_requisition_comment")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success in set_requisition_comment")
+                        return res({
+                            status: 'success',
+                            data: result.rows
+                        })
+                    }
                 }
-                else {
-                    console.log("Success in set_requisition_comment")
-                    res.send({
-                        status: 'success',
-                        despription: result.rows
-                    })
-                }
-            }
-        )
+            )
+        })
+        let response = await setRequisitionCommentPromise
+        return response
     },
 }
