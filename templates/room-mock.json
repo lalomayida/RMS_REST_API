@@ -1,0 +1,20 @@
+{
+    "id": "7",
+    "name": "Aula Magna A",
+    "capacity": 200,
+    "width": "400",
+    "length": "200",
+    "is_visible": true,
+    "attribute": [
+        {
+            "id_attribute": 3,
+            "name": "Proyector",
+            "quantity": 5
+        },
+        {
+            "id_attribute": 5,
+            "name": "Micrófono",
+            "quantity": 5
+        }
+    ]
+}

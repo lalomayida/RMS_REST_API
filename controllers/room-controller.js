@@ -34,7 +34,7 @@ module.exports = {
                     })
                 }
                 else if ((result.rows).length === 0) {
-                    console.log("No visible rooms, error retreiving get_visible_rooms")
+                    console.log("No visible rooms, retreiving 0 records for get_visible_rooms")
                     res.send({
                         status: 'error',
                         error: {
@@ -53,44 +53,76 @@ module.exports = {
 
         )
     },
-    set_new_room: (req, res) => {
-        conn.query(querySelector.set_new_room(req.body.idRoomType, req.body.roomName, req.body.capacity, req.body.width, req.body.length),
-            (error, result) => {
-                if (error) {
-                    console.log("Error in set_new_user")
-                    res.send({
-                        status: 'error',
-                        error: error
-                    })
+    get_room_information: async (idRoom) => {
+        let getRoomInformationPromise = new Promise((res, err) => {
+            conn.query(querySelector.get_room_information(idRoom),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in get_room_information")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success retreiving get_room_information")
+                        return res({
+                            status: 'success',
+                            data: (result.rows)[0]
+                        })
+                    }
                 }
-                else {
-                    console.log("Success in set_new_user")
-                    res.send({
-                        status: 'success',
-                        data: result.rows
-                    })
-                }
-            }
-        )
+            )
+        })
+        let response = await getRoomInformationPromise
+        return response
     },
-    edit_existing_room: (req, res) => {
-        conn.query(querySelector.edit_existing_room(req.body.idRoom, req.body.capacity, req.body.width, req.body.length, req.body.isVisible),
-            (error, result) => {
-                if (error) {
-                    console.log("Error in edit_existing_room")
-                    res.send({
-                        status: 'error',
-                        error: error
-                    })
+    set_new_room: async (req, res) => {
+        let setNewRoomPromise = new Promise((res, err) => {
+            conn.query(querySelector.set_new_room(req.body.room_type.id, req.body.name, req.body.capacity, req.body.width, req.body.length),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in set_new_room")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success in set_new_room")
+                        return res({
+                            status: 'success',
+                            data: (result.rows)[0]
+                        })
+                    }
                 }
-                else {
-                    console.log("Success in edit_existing_room")
-                    res.send({
-                        status: 'success',
-                        despription: 'Room edited successfully'
-                    })
+            )
+        })
+        let response = await setNewRoomPromise
+        return response
+    },
+    edit_existing_room: async (req, res) => {
+        let editExistingRoomPromise = new Promise((res, err) => {
+            conn.query(querySelector.edit_existing_room(req.body.id, req.body.capacity, req.body.is_visible),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in edit_existing_room")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success in edit_existing_room")
+                        return res({
+                            status: 'success',
+                            despription: 'Room edited successfully'
+                        })
+                    }
                 }
-            }
-        )
+            )
+        })
+        let response = await editExistingRoomPromise
+        return response
     },
 }
