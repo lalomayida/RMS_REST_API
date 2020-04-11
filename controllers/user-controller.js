@@ -23,6 +23,46 @@ module.exports = {
             }
         )
     },
+    get_visible_agents: (req, res) => {
+        conn.query(querySelector.get_visible_agents(),
+            (error, result) => {
+                if (error) {
+                    console.log("Error in get_visible_agents")
+                    res.send({
+                        status: 'error',
+                        error: error
+                    })
+                }
+                else {
+                    console.log("Success retreiving get_visible_agents")
+                    res.send({
+                        status: 'success',
+                        data: result.rows
+                    })
+                }
+            }
+        )
+    },
+    get_visible_users: (req, res) => {
+        conn.query(querySelector.get_visible_users(),
+            (error, result) => {
+                if (error) {
+                    console.log("Error in get_visible_users")
+                    res.send({
+                        status: 'error',
+                        error: error
+                    })
+                }
+                else {
+                    console.log("Success retreiving get_visible_users")
+                    res.send({
+                        status: 'success',
+                        data: result.rows
+                    })
+                }
+            }
+        )
+    },
     get_user_password: (req, res) => {
         conn.query(querySelector.get_user_password(req.query.expedientNumber),
             (error, result) => {
@@ -34,7 +74,7 @@ module.exports = {
                     })
                 }
                 else if ((result.rows).length === 0) {
-                    console.log("Unknown user, error retreiving get_user_password")
+                    console.log("Unknown user, retreiving 0 records for get_user_password")
                     res.send({
                         status: 'error',
                         error: {
@@ -51,6 +91,54 @@ module.exports = {
                 }
             }
         )
+    },
+    get_user_information: async (idUser) => {
+        let getUserInformationPromise = new Promise((res, err) => {
+            conn.query(querySelector.get_user_information(idUser),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in get_user_information")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success retreiving get_user_information")
+                        return res({
+                            status: 'success',
+                            data: (result.rows)[0]
+                        })
+                    }
+                }
+            )
+        })
+        let response = await getUserInformationPromise
+        return response
+    },
+    get_user_id: async (expedientNumber) => {
+        let getUserIdPromise = new Promise((res, err) => {
+            conn.query(querySelector.get_user_id(expedientNumber),
+                (error, result) => {
+                    if (error) {
+                        console.log("Error in get_user_id")
+                        return res({
+                            status: 'error',
+                            error: error
+                        })
+                    }
+                    else {
+                        console.log("Success retreiving get_user_id")
+                        return res({
+                            status: 'success',
+                            data: (result.rows)[0]
+                        })
+                    }
+                }
+            )
+        })
+        let response = await getUserIdPromise
+        return response
     },
     set_new_user: (req, res) => {
         conn.query(querySelector.set_new_user(req.body.roleId, req.body.expedientNumber, req.body.password, req.body.name, req.body.surname, req.body.mail),
