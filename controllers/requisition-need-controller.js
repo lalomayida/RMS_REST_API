@@ -58,7 +58,7 @@ module.exports = {
     },
     set_requisition_need: async (requisitionId, need) => {
         let setRequisitionNeedPromise = new Promise((res, err) => {
-            conn.query(querySelector.set_requisition_need(requisitionId, need.id_need, need.quantity),
+            conn.query(querySelector.set_requisition_need(requisitionId, need.id, need.quantity),
                 (error, result) => {
                     if (error) {
                         console.log("Error in set_requisition_need")

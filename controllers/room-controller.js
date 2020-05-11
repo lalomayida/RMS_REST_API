@@ -79,7 +79,7 @@ module.exports = {
     },
     set_new_room: async (req, res) => {
         let setNewRoomPromise = new Promise((res, err) => {
-            conn.query(querySelector.set_new_room(req.body.room_type.id, req.body.name, req.body.capacity, req.body.width, req.body.length),
+            conn.query(querySelector.set_new_room(req.body.type.id, req.body.name, req.body.capacity, req.body.width, req.body.length),
                 (error, result) => {
                     if (error) {
                         console.log("Error in set_new_room")

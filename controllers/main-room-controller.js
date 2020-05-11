@@ -13,7 +13,7 @@ module.exports = {
         let response = {}
 
         response.id = req.query.id
-        response.room_type = roomTypeInformation.data
+        response.type = roomTypeInformation.data
         response.name = roomInformation.data.name
         response.capacity = roomInformation.data.capacity
         response.width = roomInformation.data.width
@@ -55,8 +55,13 @@ module.exports = {
     },
     edit_existing_room: async (req, res) => {
         console.log("Start process edit_existing_room")
-        //await roomController.edit_existing_room(req, res)
+        await roomController.edit_existing_room(req, res)
         let savedAttributes = await roomAttibuteController.get_assigned_room_attibutes(req.body.id)
+
+        if (savedAttributes.status == "error") {
+            savedAttributes.data = []
+        }
+
         let attributesToUpdate = []
         let attributesToInsert = []
         let attributesToDelete = []
@@ -67,42 +72,41 @@ module.exports = {
             //Obtains attributes that need to be updated
             for (let editedAttribute of req.body.attribute) {
                 for (let storedAttribute of savedAttributes.data) {
-                    if ((editedAttribute.id_attribute == storedAttribute.id_attribute) && (editedAttribute.quantity != storedAttribute.quantity)) {
+                    if ((editedAttribute.id == storedAttribute.id) && (editedAttribute.quantity != storedAttribute.quantity)) {
                         attributesToUpdate.push(editedAttribute)
-                        idAffectedAttributes.push(editedAttribute.id_attribute)
-                        let assignationResponse = await roomAttibuteController.get_room_attribute_assignation(req.body.id, editedAttribute.id_attribute)
+                        idAffectedAttributes.push(editedAttribute.id)
+                        let assignationResponse = await roomAttibuteController.get_room_attribute_assignation(req.body.id, editedAttribute.id)
                         await roomAttibuteController.edit_existing_room_attribute(assignationResponse.data.id, editedAttribute.quantity)
                         break
                     }
                 }
             }
 
-
             for (let newAttribute of req.body.attribute) {
                 //Obtains attributes that need to be created
                 if (!JSON.stringify(attributesToUpdate).includes(JSON.stringify(newAttribute)) && !JSON.stringify(savedAttributes.data).includes(JSON.stringify(newAttribute))) {
                     attributesToInsert.push(newAttribute)
-                    idAffectedAttributes.push(newAttribute.id_attribute)
+                    idAffectedAttributes.push(newAttribute.id)
                     await roomAttibuteController.set_room_attribute(req.body.id, newAttribute)
                 }
                 //Obtains attributes do not need to be created or modified
                 else if (!JSON.stringify(attributesToUpdate).includes(JSON.stringify(newAttribute)) && JSON.stringify(savedAttributes.data).includes(JSON.stringify(newAttribute))) {
-                    idAffectedAttributes.push(newAttribute.id_attribute)
+                    idAffectedAttributes.push(newAttribute.id)
                 }
             }
 
             //Obtains attributes that need to be deleted
             for (let storedAttribute of savedAttributes.data) {
-                if (!idAffectedAttributes.includes(storedAttribute.id_attribute)) {
+                if (!idAffectedAttributes.includes(storedAttribute.id)) {
                     attributesToDelete.push(storedAttribute)
-                    let assignationResponse = await roomAttibuteController.get_room_attribute_assignation(req.body.id, storedAttribute.id_attribute)
+                    let assignationResponse = await roomAttibuteController.get_room_attribute_assignation(req.body.id, storedAttribute.id)
                     await roomAttibuteController.delete_existing_room_attribute(assignationResponse.data.id)
                 }
             }
 
         }
 
-        console.log("Success in get_room_information")
+        console.log("Success in edit_existing_room")
         res.send({
             status: 'success',
             data: 'Success in editing room'

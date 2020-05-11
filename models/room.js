@@ -1,6 +1,6 @@
 class room {
     get_all_rooms() {
-        return `SELECT id, id_room_type, name, capacity, width, length, is_visible FROM room`
+        return `SELECT id, id_room_type, name, capacity, width, length, is_visible FROM room ORDER BY id asc `
     }
     get_visible_rooms() {
         return `SELECT id, id_room_type, name, capacity, width, length FROM room WHERE is_visible = true`

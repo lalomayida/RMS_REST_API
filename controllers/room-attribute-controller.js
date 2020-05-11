@@ -82,7 +82,7 @@ module.exports = {
     },
     set_room_attribute: async (idRoom, attribute) => {
         let setRoomAttributePromise = new Promise((res, err) => {
-            conn.query(querySelector.set_room_attribute(idRoom, attribute.id_attribute, attribute.quantity),
+            conn.query(querySelector.set_room_attribute(idRoom, attribute.id, attribute.quantity),
                 (error, result) => {
                     if (error) {
                         console.log("Error in set_room_attribute")

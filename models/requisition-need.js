@@ -3,10 +3,10 @@ class requisition_need {
         return `SELECT id, name FROM requisition_need`
     }
     get_assigned_requisition_needs(idRequisition) {
-        return `SELECT id_need, (SELECT name FROM requisition_need where id = id_need) as need_name, quantity FROM public.requisition_need_assignation WHERE id_requisition = ` + idRequisition
+        return `SELECT id_need as id, (SELECT name FROM requisition_need where id = id_need) as name, quantity FROM public.requisition_need_assignation WHERE id_requisition = ` + idRequisition
     }
     set_requisition_need(idRequisition, idNeed, quantity) {
-        return `INSERT INTO public.requisition_need_assignation VALUES (default,` + idRequisition + `,` + idNeed + `,` + quantity + `) returning id`
+        return `INSERT INTO public.requisition_need_assignation VALUES (default,` + idNeed + `,` + quantity + `,` + idRequisition + `) returning id`
     }
     edit_existing_requisition_need(idAssignation, idNeed, quantity) {
         return `UPDATE requisition_need_assignation SET quantity=` + quantity + ` WHERE id=` + idAssignation + ` AND id_need=` + idNeed
