@@ -36,9 +36,9 @@ module.exports = {
         let response = await getRequisitionCommentPromise
         return response
     },
-    set_requisition_comment: async (req, res) => {
+    set_requisition_comment: async (id, comment) => {
         let setRequisitionCommentPromise = new Promise((res, err) => {
-            conn.query(querySelector.set_requisition_comment(req.body.user.id, req.body.comment[0].comment, req.body.id),
+            conn.query(querySelector.set_requisition_comment(comment.user.id, comment.comment, id),
                 (error, result) => {
                     if (error) {
                         console.log("Error in set_requisition_comment")

@@ -158,8 +158,8 @@ module.exports = {
         response.user = userInformation.data
         response.agent = agentInformation.data
         response.deparment = departmentInformation.data
-        response.initialDate = requisitionInformation.data.initial_date
-        response.finalDate = requisitionInformation.data.final_date
+        response.initialDate = requisitionInformation.data.initial_date.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        response.finalDate = requisitionInformation.data.final_date.toISOString().replace(/T/, ' ').replace(/\..+/, '')
         response.description = requisitionInformation.data.description
         response.status = statusInformation.data
         response.comment = commentInformation.data
@@ -207,7 +207,9 @@ module.exports = {
         console.log("Start process edit_existing_requisition")
         await requisitionController.edit_requisition_status(req, res)
         if ((req.body.comment).length != 0) {
-            await commentController.set_requisition_comment(req, res)
+            for(comment in req.body.comment){
+                await commentController.set_requisition_comment(req.body.id, req.body.comment[comment])    
+            }
         }
         console.log("Success in edit_existing_requisition")
         res.send({
@@ -230,7 +232,9 @@ module.exports = {
 
         await requisitionController.edit_requisition_status(req, res)
         if ((req.body.comment).length != 0) {
-            await commentController.set_requisition_comment(req, res)
+            for(comment in req.body.comment){
+                await commentController.set_requisition_comment(req.body.id, req.body.comment[comment])    
+            }
         }
         console.log("Success in promote_requisition")
         res.send({
