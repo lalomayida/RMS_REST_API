@@ -16,5 +16,8 @@
     "pg-hstore": "^2.3.3",
     "sequelize-cli": "^5.5.1",
     "tedious": "^8.2.0"
+  },
+  "engines":{
+    "node":"12.6.0"
   }
 }
