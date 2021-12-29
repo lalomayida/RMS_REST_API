@@ -3,6 +3,6 @@ module.exports = new db({
   user: "postgres",
   host: "localhost",
   database: "RMS",
-  password: "postgres",
+  password: "root",
   port: 5432
 })
