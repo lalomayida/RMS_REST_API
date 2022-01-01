@@ -14,6 +14,7 @@ const mainRoomController = require('../controllers/main-room-controller')
 const mainUserController = require('../controllers/main-user-controller')
 const departmentController = require('../controllers/department-controller')
 const statusController = require('../controllers/status-controller')
+
 // GET routes
 router.get('/user-management/users', userController.get_all_users)
 router.get('/user-management/user-information', mainUserController.get_user_information)
