@@ -19,9 +19,8 @@ module.exports = new db({
 */
 
 const db = require('pg').Pool
-const connectionString = `postgresql://${process.env.USER}:${process.env.PSWD}@${process.env.HOST}:${process.env.DBPORT}/${process.env.DATABASE}`;
 module.exports = new db({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 })
     
