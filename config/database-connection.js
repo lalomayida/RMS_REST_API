@@ -15,13 +15,13 @@ module.exports = new db({
   password: "321107d38a772bfa2382850abf545d178565dbac0d6e015addc5d65989382beb",
   port: "5432",
   ssl: { rejectUnauthorized: false }
-})*/
-
+})
+*/
 
 const db = require('pg').Pool
+const connectionString = `postgresql://${process.env.USER}:${process.env.PSWD}@${process.env.HOST}:${process.env.DBPORT}/${process.env.DATABASE}`;
 module.exports = new db({
-  connectionString: "postgres://"+process.env.USER+":"+process.env.PSWD+"@"+process.env.HOST+":"+process.env.DBPORT+"/"+process.env.DATABASE,
+  connectionString: connectionString,
   ssl: { rejectUnauthorized: false }
 })
-
     
