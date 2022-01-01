@@ -13,6 +13,6 @@ module.exports = new db({
   host: process.env.HOST,
   database: process.env.DATABASE,
   password: process.env.PSWD,
-  port: process.env.PORT,
+  port: process.env.DBPORT,
   ssl: { rejectUnauthorized: false }
 })
