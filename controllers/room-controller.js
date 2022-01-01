@@ -8,6 +8,7 @@ module.exports = {
             (error, result) => {
                 if (error) {
                     console.log("Error in get_all_rooms")
+                    console.log(error)
                     res.send({
                         status: 'error',
                         error: error
