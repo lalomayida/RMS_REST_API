@@ -21,6 +21,10 @@ router.get('/user-management/user-information', mainUserController.get_user_info
 router.get('/user-management/visible-users', userController.get_visible_users)
 router.get('/user-management/visible-agents', userController.get_visible_agents)
 router.get('/role-management/roles', roleController.get_all_roles)
+
+router.get('/role-management/test', roleController.test_role)
+
+
 router.get('/status-management/status', statusController.get_status)
 router.get('/room-management/room-types',roomTypeController.get_room_types)
 router.get('/room-management/visible-rooms', roomController.get_visible_rooms)

@@ -33,11 +33,3 @@ app.get("/", (req, res) => res.send("RMS rest-API"));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-console.log(
-  process.env.USER,
-  process.env.HOST,
-  process.env.DATABASE,
-  process.env.PSWD,
-  process.env.DBPORT
-);
